@@ -1,0 +1,17 @@
+{
+  "name": "picbedmigrate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "clipboardy": "^2.3.0",
+    "image-downloader": "^3.5.0",
+    "lodash": "^4.17.15",
+    "picgo": "^1.4.7"
+  }
+}
