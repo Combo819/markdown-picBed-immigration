@@ -12,6 +12,7 @@
     "clipboardy": "^2.3.0",
     "image-downloader": "^3.5.0",
     "lodash": "^4.17.15",
-    "picgo": "^1.4.7"
+    "picgo": "^1.4.7",
+    "rimraf": "^3.0.2"
   }
 }

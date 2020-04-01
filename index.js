@@ -1,12 +1,12 @@
 const clipboardy = require("clipboardy");
 const fs = require("fs");
-const path = require("path");
 const reg = /\!\[[\s\S]*?\]\([\s\S]*?\)/g;
 const Picgo = require("picgo");
 const picgo = new Picgo();
 const download = require("image-downloader");
 const _ = require("lodash");
-const imageDir = "images/";
+const rimraf = require("rimraf");
+const imageDir = "images_"+Date.now()+'/';
 if (!fs.existsSync(imageDir)){
     fs.mkdirSync(imageDir);
 }
@@ -14,6 +14,7 @@ const text = clipboardy.readSync();
 const urlReg = /(?<=\().+?(?=\))/;
 const matchResult = text.match(reg);
 if(!matchResult){
+    rimraf.sync(imageDir);
     throw '剪贴板不包含markdown图片';
 }
 const dict = Promise.all(
@@ -54,20 +55,10 @@ picgo.on("finished", ctx => {
   mixedArr.pop();
   const newText = mixedArr.join("");
   clipboardy.writeSync(newText);
-  removeAllImages(imageDir);
+  rimraf.sync(imageDir);
   console.log("the markdown text has been written to the clipboard");
 });
 picgo.on("failed", error => {
   console.log(error); // 错误信息
+  rimraf.sync(imageDir);
 });
-
-function removeAllImages(imageDir) {
-  fs.readdir(imageDir, (err, files) => {
-    if (err) throw err;
-    for (const file of files) {
-      fs.unlink(path.join(imageDir, file), err => {
-        if (err) throw err;
-      });
-    }
-  });
-}
